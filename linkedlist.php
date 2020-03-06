@@ -9,10 +9,11 @@
 // The node is interlinked in a sequential way to other nodes. 
 // Each node is self contained and the list is able to manage 
 // a value (generic type) for each node;
-// The list has callback functions before each node insertion and soon after. 
+// The list can use callback user functions before each node insertion and soon after. 
 // If callbeforenode returns false the node will not be inserted. 
 // Methods for the management of the list include sorting searching 
-// cutting unsetting inserting renumbering circular for the management of the list.
+// cutting unsetting inserting renumbering circular deleting. Can handle millions of 
+// nodes depending on memory availability.
 
 
 class LinkedList
@@ -153,7 +154,41 @@ class LinkedList
         }
      
      
-     
+        // Delete a node from the list. Node number is passed as argument.
+        // Returns the total nodes in the list
+        public function deleteNode($n) 
+        {  
+            $node = $this->getNode($n);
+            
+            if($n === 1)
+            {
+                $this->head = $this->getNode($n+1);
+            }
+            elseif($n === $this->totNode)
+            { 
+                $this->lastNode = $this->getNode($n-1);
+                $this->lastNode->nextNode = null;
+            }
+            else
+            {   
+                $nodeb = $this->getNode($n-1);
+                $nodeb->nextNode = $this->getNode($n+1);
+            }
+    
+            unset($node->listvalue);
+            unset($node->nodeNum);
+            unset($node->nextNode);
+            unset($node);
+            
+            $this->lastnode = $this->getNode($this->totNode);
+            $this->totNode = $this->totNode-1;
+            $this->renumList();
+            return $this->totNode;
+        }
+ 
+ 
+ 
+    
         // Cutting the list at node n
         public function cutList($n) 
         {
@@ -178,7 +213,12 @@ class LinkedList
             while($currentNode !== null)
             {
                 $currentNode = $currentNode->nextNode;
+            
+                unset($oldnode->listvalue);
+                unset($oldnode->nodeNum);
+                unset($oldnode->nextNode);
                 unset($oldnode);
+                
                 $oldnode = $currentNode;
             }
         }
