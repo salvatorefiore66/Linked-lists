@@ -14,15 +14,15 @@ Implement a new class LinkedList passing by argument the callback functions to b
     for($x = 0; $x< 2000000; $x++)
              $mylist->insertNode(mt_rand());
   
-    // Print the total number of nodes in the list
+    // Printing the total number of nodes in the list
     echo "  total nodes " .  $mylist->getlastNode()->nodeNum; 
   
 
-    // Print first node value
+    // Printinb first node value
     echo "  first node node value " .  $mylist->getfirstNode()->listvalue . "  ";
    
     
-    // Print last node value
+    // Printinb last node value
     echo "  last node value " .  $mylist->getlastNode()->listvalue . "  ";
     
 
@@ -42,13 +42,13 @@ Implement a new class LinkedList passing by argument the callback functions to b
 
     echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
     
-    // Reduce the list to 10 nodes
+    // Reducing the list to 10 nodes
     echo " the list is now reduced to 10 nodes  ";
     $mylist->cutList(10);
    
     echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
     
-    // Print the whole list values
+    // Printing the list values
     $mylist->listList();
    
  
