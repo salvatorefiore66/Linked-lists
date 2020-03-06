@@ -17,18 +17,14 @@ function aftern($item)
 } 
 
 
-    // A new linked List
+
+    // A new linked List. Passing callbacks functions to the constructor
     $mylist = new LinkedList("beforen","aftern");
    
    
-    
-    for($x = 0; $x< 40000; $x++)
-    {    
-             // insert 40000 nodes containing random values
+    // insert 2 millions nodes containing random values
+    for($x = 0; $x< 2000000; $x++)
              $mylist->insertNode(mt_rand());
-             
-    
-    }
   
     // Print the total number of nodes in the list
     echo "  total nodes " .  $mylist->getlastNode()->nodeNum; 
@@ -41,11 +37,7 @@ function aftern($item)
     // Print last node value
     echo "  last node value " .  $mylist->getlastNode()->listvalue . "  ";
     
-    
-    // Sorting the list in ascending order
-    echo "  sorting the list in  asc ";
-    $mylist->ListSortAsc();
- 
+
     // Getting a pointer to a node.
     // The node number is passed by argument
     $node = $mylist->getNode(3);
@@ -60,11 +52,14 @@ function aftern($item)
     // Searching for a value
     echo " item red found in node number  " . $mylist->findFirstLinear("red")  . "   " ;
 
-
+    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+    
     // Reduce the list to 10 nodes
     echo " the list is now reduced to 10 nodes  ";
     $mylist->cutList(10);
    
+    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+    
     // Print the whole list values
     $mylist->listList();
    
@@ -78,12 +73,21 @@ function aftern($item)
     
     // Swapping two nodes. Node numbers are passed by
     // argument
-    echo "  swapping nodes  ";
+    echo "  swapping nodes * 10 - 13 * ";
     $mylist->swapNodes(10,13);
     
+    $mylist->listList();
+    
+    
+    //  Deletin node 11
+    echo "  deleting node 11  ";
+    $mylist->deleteNode(11);
+
+    $mylist->listList();
     
     // Sorting the list in descending order
     echo "  sorting the list in  desc ";
     $mylist->ListSortDesc();
   
     $mylist->listList();
+ 
