@@ -4,18 +4,6 @@ Very straightforward to use and extend.
 Implement a new class LinkedList passing by argument the callback functions to be invoked before and after nodes insertion, otherwise null,null.The callbacks will receive the node number to be inserted, a pointer to the node just inserted. Follow various methods examples.
 
 
-Callback function called before node insertion
-function beforen($item)
-{ 
-    return true;
-} 
-    
-Callback function called after node insertion
-function aftern($item)
-{
-    return true;
-} 
-
 
 
     // A new linked List. Passing callbacks functions to the constructor
@@ -90,4 +78,20 @@ function aftern($item)
     $mylist->ListSortDesc();
   
     $mylist->listList();
+     
+     
+     
+    // Callback function called before node insertion
+    function beforen($item)
+    { 
+        return true;
+    } 
+    
+    // Callback function called after node insertion
+    function aftern($item)
+    {
+        return true;
+    } 
+
+
  
