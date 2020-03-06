@@ -18,11 +18,11 @@ Implement a new class LinkedList passing by argument the callback functions to b
     echo "  total nodes " .  $mylist->getlastNode()->nodeNum; 
   
 
-    // Printinb first node value
+    // Printing first node value
     echo "  first node node value " .  $mylist->getfirstNode()->listvalue . "  ";
    
     
-    // Printinb last node value
+    // Printing last node value
     echo "  last node value " .  $mylist->getlastNode()->listvalue . "  ";
     
 
