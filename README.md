@@ -79,7 +79,7 @@ function aftern($item)
     $mylist->listList();
     
     
-    //  Deletin node 11
+    //  Deleting node 11
     echo "  deleting node 11  ";
     $mylist->deleteNode(11);
 
