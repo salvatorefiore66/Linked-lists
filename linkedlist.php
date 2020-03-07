@@ -74,7 +74,7 @@ class LinkedList
        	    }
      
         
-            $this->lastNode->nodeNum = ++$this->totNode;
+            
             return  $this->lastNode->nodeNum;
         }
         
