@@ -9,12 +9,20 @@
 // The node is interlinked in a sequential way to other nodes. 
 // Each node is self contained and the list is able to manage 
 // a value (generic type) for each node;
+//
 // The list can use callback user functions before each node insertion and soon after. 
 // If callbeforenode returns false the node will not be inserted. 
 // Methods for the management of the list include sorting searching 
-// cutting unsetting inserting renumbering circular deleting. Can handle millions of 
-// nodes depending on memory availability.
-
+// cutting unsetting inserting renumbering circular deleting.
+// Can handle millions of  nodes depending on memory availability. 
+// Unsetting a class instance will free the memory allocated for the nodes and all 
+// contents will be lost. 
+//
+// Callback functions will be invoked as : 
+// before callback (type Integer node_number_to_be_inserted
+// after  callback (type ListNode node)
+      
+      
 
 class LinkedList
 {
@@ -25,7 +33,9 @@ class LinkedList
        protected $totNode;                // total nodes in the list
     
      
-       // Constructor with two arguments 
+       // Constructor with two arguments.
+       // Callback user functions invoked before each node insertion and soon after.
+       
        public function __construct($before,$after) 
        {
             $this->head = null;
@@ -37,9 +47,7 @@ class LinkedList
     
     
        // Inserting a new node. Returns the node number
-       // just inserted
-       // before callback (type Integer node_number_to_be_inserted)
-       // after  callback (type ListNode node)
+       // just inserted.
        public function insertNode($item) 
        { 
        	    // callback function
@@ -62,12 +70,11 @@ class LinkedList
             
             if($this->callafternode !== null)
        	    {
-                if(call_user_func($this->callafternode,$this->lastNode) === false)
-                    return false;
+                call_user_func($this->callafternode,$this->lastNode);
        	    }
-            
-            $this->totNode++;
-            $this->lastNode->nodeNum = $this->totNode;
+     
+        
+            $this->lastNode->nodeNum = ++$this->totNode;
             return  $this->lastNode->nodeNum;
         }
         
@@ -144,8 +151,7 @@ class LinkedList
             while($currentNode !== null)
             {
                         
-                $numb++;
-                $currentNode->nodeNum = $numb;
+                $currentNode->nodeNum = ++$numb;
                                                         
                 $currentNode = $currentNode->nextNode;
             
@@ -185,7 +191,6 @@ class LinkedList
             $this->renumList();
             return $this->totNode;
         }
- 
  
  
     
@@ -338,10 +343,20 @@ class LinkedList
             return $this->lastNode;
         }
         
+        
+        
         // Returning first node
         public function getfirstNode()
         {
             return $this->head;
+        }
+        
+       
+        
+        // Destructor
+        public function __destruct()
+        {  
+            
         }
         
 }
