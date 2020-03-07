@@ -67,7 +67,7 @@ class LinkedList
                $this->head = $node;
                
             $this->lastNode = $node; 
-            
+            $this->lastNode->nodeNum = ++$this->totNode;
             if($this->callafternode !== null)
        	    {
                 call_user_func($this->callafternode,$this->lastNode);
