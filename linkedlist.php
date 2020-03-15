@@ -2,7 +2,7 @@
 
 // -------------------------------Class LinkedList------------------------------------
 // Salvatore G. Fiore copyright 2020 www.salvatorefiore.com
-// The main purpose: to be used for allocating dinamically a linked list with (x)nodes.
+// The main purpose: to be used for allocating dynamically a linked list with (x)nodes.
 //
 // head----->node----->node----->node----->node----->node----->null
 //
