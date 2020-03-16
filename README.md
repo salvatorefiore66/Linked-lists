@@ -97,3 +97,105 @@ Instantiate a new class LinkedList passing by argument the callback functions to
 Very straightforward to use and extend. Implement a new class Stack passing by argument the callback functions to be invoked before and after pushing or popping, otherwise null,null.The callbacks will receive the node number to be pushed, a pointer to the node just pushed. If popping the node number to be popped, the popped node. Follow various methods example as reported below.
 
  
+// Callback function called before node insertion
+function beforen($item)
+{ 
+    return true;
+} 
+    
+// Callback function called after node insertion
+function aftern($item)
+{
+    return true;
+} 
+
+
+    
+    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+
+    // A new stack. Passing callbacks functions to the constructor
+    $mystack = new Stack("beforen","aftern");
+   
+   
+    // insert 20 nodes containing random values
+    for($x = 0; $x< 20; $x++)
+             $mystack->push(mt_rand());
+ 
+ 
+    // Print the total number of nodes in the stacj
+    echo "  total nodes " .  $mystack->getTop()->nodeNum; 
+  
+
+    // Print bottom value
+    echo "  bottom value " .  $mystack->getBottom()->stackvalue . "  ";
+   
+    
+    // Print top value
+    echo "  top value " .  $mystack->getTop()->stackvalue . "  ";
+    
+
+    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+ 
+ 
+    echo " printing the whole stack " . $mystack->listStack();
+
+    // Pushing n nodes in one go
+    echo "  adding 4 new nodes to the list  ";
+    $arr = array(356,7689,0,1);
+    $mystack->multiPush(sizeof($arr),$arr);
+
+
+    echo " printing the whole stack " . $mystack->listStack();
+
+    echo " popping three elements " ;
+    
+    $poppedelements = array();
+    
+    $poppedelements[] = $mystack->pop();
+    $poppedelements[] = $mystack->pop();
+    $poppedelements[] = $mystack->pop(); 
+
+    echo " printing the whole stack " . $mystack->listStack();
+    
+    for($x = 1; $x <= count($poppedelements); $x++ )
+        echo " popped element " . $x . "  " . $poppedelements[$x]->stackvalue; 
+
+
+    // Getting the stack number of nodes
+    $totn = $mystack->getTotStackNode();
+    
+    $poppedelements1 = array();
+    
+    for($x = 0; $x <= $totn; $x++ )
+        $poppedelements1[] = $mystack->pop();
+    
+    echo " the stack has now  " . $mystack->getTotStackNode() . "  nodes ";
+    
+    echo " printing the whole stack " . $mystack->listStack();
+    
+    // Pushing n nodes in one go
+    echo "  adding 8 new nodes to the list  ";
+    $arr = array(1,2,3,4,5,6,7,8);
+    $mystack->multiPush(sizeof($arr),$arr);
+    
+    echo " iterating the stack ";
+
+    $startAtNode = 1;
+    
+    // Iterating and traversing the stack
+    $mystack->iteratorStack(function($node)
+        {
+            // Anonymous function called at each iteration
+            // Receiving the node currently traversed
+            echo " node n. " . $node->nodeNum;
+            
+            return true;
+            
+        },$startAtNode);
+        
+
+    gc_collect_cycles();
+  
+
+    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+
