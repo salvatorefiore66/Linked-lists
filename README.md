@@ -160,7 +160,7 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
     echo " printing the whole stack " . $mystack->listStack();
     
     // Pushing n nodes in one go
-    echo "  adding 8 new nodes to the list  ";
+    echo "  8 new nodes to the stack  ";
     $arr = array(1,2,3,4,5,6,7,8);
     $mystack->multiPush(sizeof($arr),$arr);
     
