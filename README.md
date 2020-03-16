@@ -96,20 +96,6 @@ Instantiate a new class LinkedList passing by argument the callback functions to
     
 Very straightforward to use and extend. Implement a new class Stack passing by argument the callback functions to be invoked before and after pushing or popping, otherwise null,null.The callbacks will receive the node number to be pushed, a pointer to the node just pushed. If popping the node number to be popped, the popped node. Follow various methods example as reported below.
 
- 
-// Callback function called before node insertion
-function beforen($item)
-{ 
-    return true;
-} 
-    
-// Callback function called after node insertion
-function aftern($item)
-{
-    return true;
-} 
-
-
     
     echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
 
@@ -198,4 +184,17 @@ function aftern($item)
   
 
     echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
-
+    
+    
+    // Callback function called before node insertion
+    function beforen($item)
+    { 
+        return true;
+    } 
+    
+    // Callback function called after node insertion
+    function aftern($item)
+    {
+        return true;
+    }
+    
