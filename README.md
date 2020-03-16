@@ -126,7 +126,7 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
     echo " printing the whole stack " . $mystack->listStack();
 
     // Pushing n nodes in one go
-    echo "  adding 4 new nodes to the list  ";
+    echo "   4 new nodes to the stack  ";
     $arr = array(356,7689,0,1);
     $mystack->multiPush(sizeof($arr),$arr);
 
