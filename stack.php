@@ -45,8 +45,8 @@
 
 class Stack
 {
-       protected $bottom;                   // head of the list
-       protected $top;                      // last inserted node
+       protected $bottom;                   // stack bottom
+       protected $top;                      // stack top
        protected $callbeforenode;           // callback function before pushing / popping
        protected $callafternode;            // callback function after pushing / popping
        protected $totNode;                  // total nodes in the stack
