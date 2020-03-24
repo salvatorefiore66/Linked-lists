@@ -150,7 +150,7 @@ class LinkedList
             if($currentNode !== null)  
                    return $currentNode->nodeNum;
             else
-                   return 0;
+                   return 0; 
         }
      
      
