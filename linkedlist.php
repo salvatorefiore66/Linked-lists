@@ -76,56 +76,56 @@ class LinkedList
         
             
             return  $this->lastNode->nodeNum;
-        }
-        
-              
-              
+        } 
+    
+    
+     
         // Inserting a new node at a given position. Returns the node number
         // inserted.
         public function insertNodeAt($n,$item) 
         {
+          
             if($n > $this->lastNode->nodeNum)
-       	{
+       	    {
        	        return $this->insertNode($item);
-       	}
+       	    }
        	    
             if($this->callbeforenode !== null)
-       	{
+       	    {
                 if(call_user_func($this->callbeforenode,$n) === false)
                     return false;
-       	}
+       	    }
           
             $node = new ListNode($item);
-       	$currnode= $this->getNode($n);
+       	    $currnode= $this->getNode($n);
        	        
-       	if($n === 1)
-       	{
-       	    $prevNode = $node;
-       	    $this->head = $node;
+       	    if($n === 1)
+       	    {
+       	        $prevNode = $node;
+       	        $this->head = $node;
        	            
-       	}
-       	else
-       	{
-       	    $prevNode = $this->getNode($n - 1);
-       	    $prevNode->nextNode = $node;
-       	}
+       	    }
+       	    else
+       	    {
+       	        $prevNode = $this->getNode($n - 1);
+       	        $prevNode->nextNode = $node;
+       	    }
        	        
-       	$node->nextNode = $currnode;
+       	    $node->nextNode = $currnode;
        	    
 
  
             if($this->callafternode !== null)
-       	{
+       	    {
                 call_user_func($this->callafternode,$node);
-       	}
+       	    }
         
             $this->renumList();
             return  $n;
         }
+        
        
-              
-              
-              
+    
               
         // Allocating n nodes in one go. Values to be inserted
         // are passed in the array $value
