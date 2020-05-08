@@ -574,7 +574,7 @@ class LinkedList
         
      
         
-         // Renumbering and linking backwards the whole list >= 1 <= n      ------------------ to be checked 
+         // Renumbering and linking backwards the whole list >= 1 <= n.
         public function linkBackList() 
         {
            
