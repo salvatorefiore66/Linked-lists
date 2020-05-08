@@ -550,7 +550,7 @@ class LinkedList
         // Returning a node offset from $Node
         // The function can also receive the node number in $Node.
         // Returns the offset node.If the mode
-        public function getNodeOffset($offset,$Node,$mode=null)
+        public function getNodeOffset($offset,$Node)
         {
             if(is_numeric($Node))
                 $Node = $this->getNode($Node);
