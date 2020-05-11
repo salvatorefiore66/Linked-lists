@@ -432,7 +432,7 @@ class LinkedList
      
         
     
-        // Descendending order list sorting with bubble sort
+        // Descending order list sorting with bubble sort
         // It's a bit slow for high number of nodes > 80000
         public function ListSortDesc() 
         {
@@ -465,7 +465,7 @@ class LinkedList
         
     
     
-        // Ascendending order list sorting with bubble sort
+        // Ascending order list sorting with bubble sort
         // It's a bit slow for high number of nodes > 80000
         public function ListSortAsc() 
         {
