@@ -204,7 +204,7 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
 # Linked-list Obj
 
 Very straightforward to use and extend.
-Instantiate a new class LinkedListObj passing by argument a key for this new list.  Each list node can handle a child which is fundamentally a pointer to an object the class should manage. Children can also be put in a stack for further manipulation. The class LinkedListObj includes a method for stack through the class Stack documented in stack.php. Follow various methods examples.
+Instantiate a new class LinkedListObj passing by argument a key for this new list.  Each list node can handle a child which is fundamentally a pointer to an object the class should manage. Children can also be put in a stack for further manipulation. The class LinkedListObj includes a method for stacking through the class Stack documented in stack.php. Follow various methods examples.
 
   
     include 'linkedlistobj.php';
