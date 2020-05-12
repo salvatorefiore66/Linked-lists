@@ -5,8 +5,8 @@ include 'stack.php';
 
 // -------------------------------Class  LinkedListObj------------------------------------
 // Salvatore G. Fiore copyright 2020 www.salvatorefiore.com
-// The main purpose: to be used for allocating dynamically a linked list with (x)nodes with
-// pointers to objects.
+// The main purpose: to be used for allocating dynamically a double linked list with
+// (x)nodes with child pointers to objects.
 //
 // head----->node----->node----->node----->node----->node----->null
 //             |         |         |         |         |
@@ -19,10 +19,8 @@ include 'stack.php';
 //
 // The node is interlinked in a sequential way to other nodes (next and previous)
 // Each node is self contained and the list is able to manage 
-// a value (generic type) for each node and a pointer to children objects.
+// a key for each node and a pointer to children objects.
 //
-// The list can use callback user functions before each node insertion and soon after. 
-// If callbeforenode returns false the node will not be inserted. 
 // Methods for the management of the list include sorting searching 
 // cutting unsetting inserting renumbering circular deleting.
 // Can handle millions of  nodes depending on memory availability. 
@@ -37,8 +35,9 @@ class LinkedListObj
         protected $head;                   // head of the list
         protected $lastNode;               // last inserted node
         protected $totNode;                // total nodes in the list
-    
-        // Constructor without arguments.
+  
+
+        // Constructor with list key as argument
         public function __construct($key=null) 
         {
             $this->head = null;
@@ -155,8 +154,21 @@ class LinkedListObj
             return $node->child ;
         }
   
-  
  
+  
+        
+        // unset child node from $node
+        public function removeChild($node) 
+        {
+       	    if(is_numeric($node))
+       	        $node = $this->getNode($node);
+       	        
+            unset($node->child);
+            
+            return true;
+        }
+  
+  
   
   
         // Iterator traversing the list. Callback user function is called at each
@@ -308,10 +320,9 @@ class LinkedListObj
         public function findFirstNodeSortedAscLinear($item) 
         {         
             $currentNode = $this->head;
-            
-          //  echo " searcing  for " . $item . "<br><br>";
+        
             while($currentNode !== null && $currentNode->nodeKey < $item)
-               // echo $currentNode->nodeKey . " -" . $currentNode->nodeNum . "-  " . " < " .$currentNode->prevNode->nodeNum . " > <br><br>";
+               
                 $currentNode = $currentNode->nextNode;
         
 
@@ -644,22 +655,35 @@ class LinkedListObj
     
     
     
-        // Stacking children in an allocate dynamic stack
-        // A callback can be invoked at each 
+        // Stacking children in an dynamically allocated stack
+        // A callback user function can be invoked at each node iteration and if
+        // returning true the child will be saved on the stack.
+        // The final stack order can be reversed by passing "-" in $mode.
         public function stackChildren($List,$callback=null,$mode=null) 
         {
-            $currentNode = $List->head;
+            if($mode == "-")
+                $currentNode = $List->lastNode;
+            else
+                $currentNode = $List->head;
+                
             $stack = new Stack(null,null);
             
             while($currentNode !== null)
             {
-                
-                $stack->push($currentNode->child);
-    
+                if($callback !== null)
+                {
+                    if(call_user_func($callback,$currentNode) === true)
+                        $stack->push($currentNode->child);
+                }
+                else
+                    $stack->push($currentNode->child);
+             
                 $currentNode = $currentNode->nextNode;
             }
             return $stack;
         }
+    
+    
     
     
         
