@@ -661,11 +661,12 @@ class LinkedListObj
         // The final stack order can be reversed by passing "-" in $mode.
         public function stackChildren($List,$callback=null,$mode=null) 
         {
-            if($mode == "-")
-                $currentNode = $List->lastNode;
-            else
+    
+            if($mode != "-")
                 $currentNode = $List->head;
-                
+            else
+                $currentNode = $List->lastNode;
+    
             $stack = new Stack(null,null);
             
             while($currentNode !== null)
@@ -677,8 +678,11 @@ class LinkedListObj
                 }
                 else
                     $stack->push($currentNode->child);
-             
-                $currentNode = $currentNode->nextNode;
+                    
+                if($mode != "-")
+                    $currentNode = $currentNode->nextNode;
+                else
+                    $currentNode = $currentNode->prevNode;
             }
             return $stack;
         }
