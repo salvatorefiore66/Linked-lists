@@ -207,9 +207,7 @@ Very straightforward to use and extend.
 Instantiate a new class LinkedListObj passing by argument a key for this new list.  Each list node can handle a child which is fundamentally a pointer to an object the class should manage. Children can also be put in a stack for further manipulation. The class LinkedListObj includes a method for stacking through the class Stack documented in stack.php. Follow various methods examples.
 
   
-    include 'linkedlistobj.php';
-    
-    // An example of object passed by argument
+        // An example of object passed by argument
     class mychild
     {
         public $myvalue;
@@ -331,8 +329,8 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
     
     if($node !== null)
         echo  "The nearest node to key " .  $key . " is node number  " . $node->nodeNum . " <br><br> ";
-        
     
+    echo  "Stacking child nodes <br><br>";
     // children in a stack. The method stackChildren() should receive by argument
     // the list LinkedListObj containing the nodes with children to stack.
     $stack = $mylist1->stackChildren($mylist1);
@@ -387,4 +385,21 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
                 return true;
                 
             },$mylist1->getTotListNode(),"-");
+      
+
+    echo  " <br><br> ";
+   
+    // creating reverse children stack. The method stackChildren() should receive by argument
+    // the list LinkedListObj containing the nodes with children to stack, a callback function
+    // if any called for each child pushing and the mode "-" to indicate the method the 
+    // stacking order.
+    $reversestack = $mylist1->stackChildren($mylist1,function($node)
+                            {
+                                echo "callback called to stack child node " . $node->nodeNum . "<br>";
+                                 return true;
+                                
+                            },"-");
+
+    echo "<br><br> there are " . $reversestack->getTotStackNode() . " children nodes in a reverse children stack ";
     
+
