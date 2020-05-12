@@ -292,13 +292,6 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
        
       
     
-    $mychild = new mychild(" child node");
-    echo "<br><br> inserting a child at node 10 <br><br>";
-    
-    $mylist1->insertChild(10,$mychild);
-    
-    $node = $mylist1->getNode(10);
-    echo "child at node 10 is " . $node->child->myvalue . "<br><br>";
     
     
     // sort the list
@@ -306,6 +299,18 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
  
      // Printing the list values
     $mylist1->listList();
+    
+    
+    
+    $mychild = new mychild(" child node");
+    echo "<br><br> inserting a child at node 10 <br><br>";
+    
+    $mylist1->insertChild(10,$mychild);
+    
+    $node = $mylist1->getNode(10);
+    echo "child at node 10 contains > " . $node->child->myvalue . "<br><br>";
+    
+    
     
     $node = $mylist1->getNode(16);
     echo " node 16 has key " . $node->nodeKey   . "<br><br>";
@@ -339,8 +344,47 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
     $key = mt_rand();
     
     $mylist1->setListKey($key); 
-    echo " the list key is  " .  $mylist1->getListKey();
+    echo " the list key is  " .  $mylist1->getListKey() . "<br><br>";
+   
+
     
+    $node = $mylist1->getNode(10);
+    echo "before removal child at node 10 contains > " . $node->child->myvalue . "<br><br>";
     
 
+
+    // removing child from node number 10
+    $mylist1->removeChild($mylist1->getNode(10)); 
+  
+  
+    
+    $node = $mylist1->getNode(10);
+    echo "after removal child at node 10 contains >  " . $node->child->myvalue . "<br><br>";
+    
+    
+    
+    // inserting new children
+    echo "<br>inserting new children " .  " <br><br> ";
+    for($x = 1;$x <= $mylist1->getTotListNode(); $x++ )
+    {
+        $mychild = new mychild("child of node" . $x);
+        echo "<br>new child at node " . $x;
+        $mylist1->insertChild($x,$mychild);
+    
+    }
+    echo  " <br><br> ";
+  
+  
+  
+    // iterating the list in reverse and printing children contents 
+    $mylist1->iteratorList(function($node)
+            {
+                static $nodenum = 1;
+                
+                echo " iterating node " . $node->nodeNum . "<br>";
+                echo " child node contains: " . $node->child->myvalue . "<br>";
+                
+                return true;
+                
+            },$mylist1->getTotListNode(),"-");
     
