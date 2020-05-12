@@ -1,4 +1,4 @@
-# Linked-lists
+# Linked-list
 
 Very straightforward to use and extend.
 Instantiate a new class LinkedList passing by argument the callback functions to be invoked before and after nodes insertion, otherwise null,null.The callbacks will receive the node number to be inserted, a pointer to the node just inserted. Follow various methods examples.
@@ -94,7 +94,7 @@ Instantiate a new class LinkedList passing by argument the callback functions to
     }
     
     
-# Stacks
+# Stack
 Very straightforward to use and extend. Implement a new class Stack passing by argument the callback functions to be invoked before and after pushing or popping, otherwise null,null.The callbacks will receive the node number to be pushed, a pointer to the node just pushed. If popping the node number to be popped, the popped node. Follow various methods example as reported below.
 
     
@@ -198,4 +198,149 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
     {
         return true;
     }
+  
+  
+  
+# Linked-list Obj
+
+Very straightforward to use and extend.
+Instantiate a new class LinkedListObj passing by argument a key for this new list.  Each list node can handle a child which is fundamentally a pointer to an object the class should manage. Children can also be put in a stack for further manipulation. The class LinkedListObj includes a method for stack through the class Stack documented in stack.php. Follow various methods examples.
+
+  
+    include 'linkedlistobj.php';
+    
+    // An example of object passed by argument
+    class mychild
+    {
+        public $myvalue;
+    
+        public function __construct($val) 
+        {     
+            $this->myvalue = $val;
+    
+        }
+    
+    }
+
+
+    // Very straightforward to use and extend.
+    // Implementing a new class LinkedListObj.
+    
+    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+
+    // A new linked List. Passing callbacks functions to the constructor
+    $mylist1 = new LinkedListObj("a list key");
+   
+   
+    for($x = 0; $x< 20; $x++)
+             $mylist1->insertNode(mt_rand());
+  
+    // Print the total number of nodes in the list
+    echo "  total nodes " .  $mylist1->getlastNode()->nodeNum . "<br><br>";
+  
+
+    // Print first node value
+    echo "  first node key " .  $mylist1->getfirstNode()->nodeKey .  "<br><br>";
+   
+    
+    // Print last node value
+    echo "  last node key " .  $mylist1->getlastNode()->nodeKey . "<br><br>";
+    
+    
+    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+ 
+    
+    // Printing the list values
+    $mylist1->listList();
+    
+    echo "<br><br>";
+
+    $node = $mylist1->getNode(23);
+
+    echo $node->nodeKey . " is the key of node 23 <br><br>";
+
+
+    $node = $mylist1->getNodeOffset(2,$mylist1->getNode($mylist1->getTotListNode()),"-");
+    
+    echo " offset 2 from the end list is node " . $node->nodeNum . "<br><br>";
+    
+    echo "deleting node 15 <br><br> ";
+    $node = $mylist1->deleteNode(15);
+    
+    // Printing the list values
+    $mylist1->listList();
+    
+    $node = $mylist1->getNode(5);
+    echo  "<br><br> pervious node of node(5) is " . $node->prevNode->nodeNum . "<br><br>";
+  
+    
+    // Printing the list values
+    $mylist1->listList();
+    
+    echo "<br><br> iterating through the list in reverse order and printing the node numbers <br><br>";
+    
+   
+    $mylist1->iteratorList(function($node)
+            {
+                static $nodenum = 1;
+                
+                echo " iterating node " . $node->nodeNum . "<br>";
+                
+                return true;
+                
+            },$mylist1->getTotListNode(),"-");
+       
+      
+    
+    $mychild = new mychild(" child node");
+    echo "<br><br> inserting a child at node 10 <br><br>";
+    
+    $mylist1->insertChild(10,$mychild);
+    
+    $node = $mylist1->getNode(10);
+    echo "child at node 10 is " . $node->child->myvalue . "<br><br>";
+    
+    
+    // sort the list
+    $mylist1->ListSortAsc();
+ 
+     // Printing the list values
+    $mylist1->listList();
+    
+    $node = $mylist1->getNode(16);
+    echo " node 16 has key " . $node->nodeKey   . "<br><br>";
+    
+    $node = $mylist1->findFirstNodeSortedAscLinear($node->nodeKey);
+ 
+    if($node !== null)
+        echo  "The node with key" .  $node->nodeKey . " is node number  " . $node->nodeNum . " <br><br> ";
+    
+    $key = mt_rand();
+    
+    // generate random key
+    echo "generating a random key " . $key . " <br><br> ";
+    
+
+    $node = $mylist1->findNearestNodeSortedAscLinear($key);
+    
+    
+    if($node !== null)
+        echo  "The nearest node to key " .  $key . " is node number  " . $node->nodeNum . " <br><br> ";
+        
+    
+    // children in a stack. The method stackChildren() should receive by argument
+    // the list LinkedListObj containing the nodes with children to stack.
+    $stack = $mylist1->stackChildren($mylist1);
+    
+    echo " there are " . $stack->getTotStackNode() . " children nodes in the stack from list " .  " <br><br> ";
+
+
+    // resetting the list key
+    $key = mt_rand();
+    
+    $mylist1->setListKey($key); 
+    echo " the list key is  " .  $mylist1->getListKey();
+    
+    
+
     
