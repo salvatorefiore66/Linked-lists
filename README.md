@@ -226,7 +226,7 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
     
     echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
 
-    // A new linked List. Passing callbacks functions to the constructor
+    // A new linked List. Passing the key to the constructor
     $mylist1 = new LinkedListObj("a list key");
    
    
