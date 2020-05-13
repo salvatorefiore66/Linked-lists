@@ -207,7 +207,7 @@ Very straightforward to use and extend.
 Instantiate a new class LinkedListObj passing by argument a key for this new list.  Each list node can handle a child which is fundamentally a pointer to an object the class should manage. Children can also be put in a stack for further manipulation. The class LinkedListObj includes a method for stacking through the class Stack documented in stack.php. Follow various methods examples.
 
   
-        // An example of object passed by argument
+    // An example of object passed by argument
     class mychild
     {
         public $myvalue;
@@ -219,8 +219,8 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
         }
     
     }
-
-
+    
+    
     // Very straightforward to use and extend.
     // Implementing a new class LinkedListObj.
     
@@ -231,7 +231,7 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
    
    
     for($x = 0; $x< 20; $x++)
-             $mylist1->insertNode(mt_rand());
+             $mylist1->insertNode((string) mt_rand());
   
     // Print the total number of nodes in the list
     echo "  total nodes " .  $mylist1->getlastNode()->nodeNum . "<br><br>";
@@ -292,10 +292,11 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
     
     
     
-    // sort the list
+    // sort the list ascending order
     $mylist1->ListSortAsc();
  
      // Printing the list values
+    echo "<br><br> list sorted ascending order ";
     $mylist1->listList();
     
     
@@ -324,7 +325,7 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
     echo "generating a random key " . $key . " <br><br> ";
     
 
-    $node = $mylist1->findNearestNodeSortedAscLinear($key);
+    $node = $mylist1->findNearestNodeSortedLinear($key);
     
     
     if($node !== null)
@@ -388,6 +389,8 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
       
 
     echo  " <br><br> ";
+  
+  
    
     // creating reverse children stack. The method stackChildren() should receive by argument
     // the list LinkedListObj containing the nodes with children to stack, a callback function
@@ -400,6 +403,26 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
                                 
                             },"-");
 
-    echo "<br><br> there are " . $reversestack->getTotStackNode() . " children nodes in a reverse children stack ";
+    echo "<br><br> there are " . $reversestack->getTotStackNode() . " children nodes in a reverse children stack <br><br> ";
     
+    $mylist1->ListSortDesc();
+  
+  
+    
+    
+    // Printing the list values
+    $mylist1->listList();
+    $key = "378912578";
+    
+    $node = $mylist1->findNearestNodeSortedLinear($key,"-");
+    if($node !== null)
+        echo  "<br><br> The nearest node to key " .  $key . " is node number  " . $node->nodeNum . " <br><br> ";
+    
+    
+
+
+    $node = $mylist1->insertNodeNearestOf($key,"-");
+    if($node !== null)
+        echo  "<br><br> Insert new node with key " .  $key . " nearest to node number  " . $node->nodeNum . " <br><br> ";
+     $mylist1->listList(); 
 
