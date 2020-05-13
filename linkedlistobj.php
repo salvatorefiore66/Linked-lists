@@ -136,8 +136,6 @@ class LinkedListObj
                     $Node = $Node->prevNode;
             }
            
-            echo " found at " . $Node->nodeNum;
-            
             $node = new ListNodeObj($key);
             
             if($Node->nodeNum == 1)
