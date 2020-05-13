@@ -3,9 +3,9 @@
 include 'stack.php';
 
 
-// -------------------------------Class  LinkedListObj------------------------------------
+// -------------------------------Class  LinkedListObj------------------------------
 // Salvatore G. Fiore copyright 2020 www.salvatorefiore.com
-// The main purpose: to be used for allocating dynamically a double linked list with
+// The main purpose: to be used for allocating dynamically a double linked list of
 // (x)nodes with child pointers to objects.
 //
 // head----->node----->node----->node----->node----->node----->null
@@ -20,6 +20,10 @@ include 'stack.php';
 // The node is interlinked in a sequential way to other nodes (next and previous)
 // Each node is self contained and the list is able to manage 
 // a key for each node and a pointer to children objects.
+// Each list node can handle a child which is fundamentally a pointer to an object 
+// the class should manage. Children can also be put in a stack for further manipulation. 
+// The class LinkedListObj includes a method for stacking through the class Stack documented 
+// in stack.php. 
 //
 // Methods for the management of the list include sorting searching 
 // cutting unsetting inserting renumbering circular deleting.
@@ -31,7 +35,7 @@ include 'stack.php';
 
 class LinkedListObj
 {
-        protected $key;                    // key of the list
+        protected $key;                    // key of the list (alphanumeric)
         protected $head;                   // head of the list
         protected $lastNode;               // last inserted node
         protected $totNode;                // total nodes in the list
@@ -43,21 +47,19 @@ class LinkedListObj
             $this->head = null;
             $this->lastNode = null;
             $this->totNode = 0;
-            $this->key = $key;
+            $this->key = (string ) $key;
         }
     
     
-        
+        // Set the list key with an alphanumeric value.
         public function setListKey($key) 
         {
-            $this->key = $key;
-           
+            $this->key = (string ) $key;
             return true;
-         
         }
        
        
-        // Inserting a new node. Returns the inserted node
+        // Inserting a new node. Returns the inserted node.
         public function insertNode($item) 
         { 
             $node = new ListNodeObj($item);
@@ -77,7 +79,7 @@ class LinkedListObj
         }
         
         
-        
+
         // Inserting a new node at a given position. Returns the inserted node.
         public function insertNodeAt($n,$item) 
         {
@@ -87,7 +89,6 @@ class LinkedListObj
        	        return $this->insertNode($item);
        	    }
        	    
-          
             $node = new ListNodeObj($item);
        	    $currnode= $this->getNode($n);
        	        
@@ -98,7 +99,7 @@ class LinkedListObj
        	    }
        	    else
        	    {
-       	        $prevNode = $this->getNode($n - 1);
+       	        $prevNode = $currnode->prevNode;
        	        $prevNode->nextNode = $node;
        	    
        	    }
@@ -109,11 +110,58 @@ class LinkedListObj
        	    $currnode->prevNode = $node;
        	    
        	
-            $this->renumList();
+            $this->renumNode($node->prevNode);
             return  $node;
         }
         
-       
+        
+        
+    
+        // Inserting a new node in the ascending sorted list nearest
+        // to the key $key. Returns the inserted node.
+        // If the list is descending order sorted the insert direction 
+        // $mode should be set to "-".
+        public function insertNodeNearestOf($key,$mode=null) 
+        {
+            if($mode != "-")
+            { 
+                $Node = $this->head;
+                while($Node !== null && $Node->nodeKey < $key)
+                    $Node = $Node->nextNode;
+            }
+            else
+            { 
+                $Node = $this->lastNode;
+                while($Node !== null && $Node->nodeKey < $key)
+                    $Node = $Node->prevNode;
+            }
+           
+            echo " found at " . $Node->nodeNum;
+            
+            $node = new ListNodeObj($key);
+            
+            if($Node->nodeNum == 1)
+       	    {
+       	        $prevNode = null;
+       	        $this->head = $node;
+       	    }
+       	    else
+       	    {
+       	        $prevNode = $Node->prevNode;
+       	        $prevNode->nextNode = $node;
+       	    }
+       	        
+       	    // update pointers to previous and next nodes
+       	    $node->nextNode = $Node;
+       	    $node->prevNode = $prevNode;
+       	    $Node->prevNode = $node;
+       	
+            $this->renumNode($node->prevNode);
+            return  $node;
+        }
+        
+        
+        
 
         // Allocating n nodes in one go. Values to be inserted
         // are passed in the array $value
@@ -201,7 +249,7 @@ class LinkedListObj
         // iteration receiving the current node passed as argument. 
         // Iteration may be offset starting at $Node.
         // The iteration can end prematurely if the callable user function returns false;
-        // The method cam receive the node number or the actual node from where to
+        // The method can receive the node number or the actual node from where to
         // start the iteration.
         public function iteratorListAtNode($callback,$Node=null,$mode="") 
         {         
@@ -333,24 +381,61 @@ class LinkedListObj
         }
     
 
-   
+        
+        // Seeking the nearest node value passed as argument in the
+        // ascending order sorted list. Returns the nearest node to the 
+        // searched key $item. If the list is descending order sorted
+        // the search direction $mode shoud be set to "-".
+        public function findNearestNodeSortedLinear($item,$mode=null) 
+        {         
+           
+            if($mode != "-")
+                $currentNode = $this->head;
+            else
+                $currentNode = $this->lastNode;
+
+            while($currentNode !== null && $currentNode->nodeKey < $item)
+            {
+                if($mode != "-")
+                    $currentNode = $currentNode->nextNode;
+                else
+                    $currentNode = $currentNode->prevNode;
+            }
+                
+            return $currentNode;
+        }
    
    
         
-        // Seeking the nearest node value passed as argument in the ascending
-        // sorted list. Returns the nearest node to the searched
+        // Seeking the nearest node value passed as argument in the
+        // ascending order sorted list. Returns the nearest node to the 
+        // searched key $item.
         public function findNearestNodeSortedAscLinear($item) 
         {         
+           
             $currentNode = $this->head;
-            
+
             while($currentNode !== null && $currentNode->nodeKey < $item)
-                $currentNode = $currentNode->nextNode;
-                
-                return $currentNode;
-        }
+                    $currentNode = $currentNode->nextNode;
     
+            return $currentNode;
+        }
    
    
+        
+        // Seeking the nearest node value passed as argument in the
+        // descending order sorted list. Returns the nearest node to the 
+        // searched key $item. 
+        public function findNearestNodeSortedDescLinear($item) 
+        {         
+
+            $currentNode = $this->lastNode;
+
+            while($currentNode !== null && $currentNode->nodeKey < $item)
+                    $currentNode = $currentNode->prevNode;
+                
+            return $currentNode;
+        }
    
         
    
@@ -369,8 +454,6 @@ class LinkedListObj
         }
  
  
- 
- 
     
         // Swapping the value of two nodes
         // the node numbers are passed by parameter
@@ -387,30 +470,39 @@ class LinkedListObj
             
         }
         
-        
-        
-        
-     
-        // Renumbering the whole list >= 1 <= n
-        public function renumList() 
+         
+        // Renumbering the whole list >= 1 <= n.
+        // The renumbering will start from this node onwards 
+        // until the end of the list is reached.
+        public function renumNode($Node) 
         {
-          
-            $currentNode = $this->head;
-            $numb = 0;
+            $currentNode = $Node;
+            $numb = $Node->nodeNum-1;
             
             while($currentNode !== null)
             {
-                        
                 $currentNode->nodeNum = ++$numb;
-                                                        
                 $currentNode = $currentNode->nextNode;
-            
             }
             $this->totNode = $numb;
         }
      
     
-    
+     
+        // Renumbering the whole list >= 1 <= n.
+        public function renumList() 
+        {
+            $currentNode = $this->head;
+            $numb = 0;
+
+            while($currentNode !== null)
+            {
+                $currentNode->nodeNum = ++$numb;
+                $currentNode = $currentNode->nextNode;
+            }
+            $this->totNode = $numb;
+        }
+     
     
     
     
@@ -448,8 +540,6 @@ class LinkedListObj
             $this->renumList();
             return $this->totNode;
         }
- 
-    
 
 
     
@@ -652,8 +742,7 @@ class LinkedListObj
             $this->totNode = $numb;
         }
     
-    
-    
+
     
         // Stacking children in an dynamically allocated stack
         // A callback user function can be invoked at each node iteration and if
@@ -686,8 +775,6 @@ class LinkedListObj
             }
             return $stack;
         }
-    
-    
     
     
         
@@ -735,7 +822,7 @@ class LinkedListObj
 // to next node a pointer to previous node
 class ListNodeObj
 {
-    public $nodeKey;                     // the node key
+    public $nodeKey;                     // the node key (alphanumeric)
     public $nodeNum;                     // the node sequential index in the list
     public $child;                       // pointer to a generic object 
     public $nextNode;                    // pointer to next node in the list / last node pointing to null
@@ -743,7 +830,7 @@ class ListNodeObj
 
     public function __construct($listitem) 
     {
-        $this->nodeKey = $listitem;
+        $this->nodeKey = (string ) $listitem;
         $this->child = null;
         $this->nextNode = null;
     }
