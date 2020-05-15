@@ -410,7 +410,7 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
   
     
     // A new linked List. Passing the key to the constructor.
-    // Insertion of nodes causes the sorting of the list in cending
+    // Insertion of nodes causes the sorting of the list in descending
     // order.
     $mylist2 = new LinkedListObj("a second list key");
 
