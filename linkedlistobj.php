@@ -6,7 +6,7 @@ include 'stack.php';
 // -------------------------------Class  LinkedListObj------------------------------
 // Salvatore G. Fiore copyright 2020 www.salvatorefiore.com
 // The main purpose: to be used for allocating dynamically a double linked list of
-// (x)nodes with child pointers to objects.
+// (x)nodes with children pointers to objects.
 //
 // null<------head----->node----->node----->node----->node----->node------>null
 //             |         |         |         |         |          |
