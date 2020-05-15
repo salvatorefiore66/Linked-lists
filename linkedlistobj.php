@@ -8,14 +8,10 @@ include 'stack.php';
 // The main purpose: to be used for allocating dynamically a double linked list of
 // (x)nodes with child pointers to objects.
 //
-// head----->node----->node----->node----->node----->node----->null
-//             |         |         |         |         |
-//           child     child     child     child     child    
+// null<------head----->node----->node----->node----->node----->node------>null
+//             |         |         |         |         |          |
+//           child     child     child     child     child      child
 //
-//
-// head<-----node<-----node<-----node<-----node<-----node<-----null
-//             |         |         |         |         |
-//           child     child     child     child     child    
 //
 // The node is interlinked in a sequential way to other nodes (next and previous)
 // Each node is self contained and the list is able to manage 
@@ -47,14 +43,14 @@ class LinkedListObj
             $this->head = null;
             $this->lastNode = null;
             $this->totNode = 0;
-            $this->key = (string ) $key;
+            $this->key = (string) $key;
         }
     
     
         // Set the list key with an alphanumeric value.
         public function setListKey($key) 
         {
-            $this->key = (string ) $key;
+            $this->key = (string) $key;
             return true;
         }
        
@@ -110,56 +106,53 @@ class LinkedListObj
        	    $currnode->prevNode = $node;
        	    
        	
-            $this->renumNode($node->prevNode);
+            $this->renumNode($node);
             return  $node;
         }
+
+  
         
-        
-        
-    
-        // Inserting a new node in the ascending sorted list nearest
-        // to the key $key. Returns the inserted node.
-        // If the list is descending order sorted the insert direction 
-        // $mode should be set to "-".
-        public function insertNodeNearestOf($key,$mode=null) 
+        // Inserting a new node in an ascending order sorted list nearest
+        // to the key $key.
+        // Returns the inserted node.
+        public function insertNodeNearestOfSortedAsc($key) 
         {
-            if($mode != "-")
-            { 
-                $Node = $this->head;
-                while($Node !== null && $Node->nodeKey < $key)
-                    $Node = $Node->nextNode;
+            $Node = $this->head;
+            $n = 1;
+        
+            while($Node !== null && $key > $Node->nodeKey)
+            {
+                $Node = $Node->nextNode;
+                $n++;
+                
             }
-            else
-            { 
-                $Node = $this->lastNode;
-                while($Node !== null && $Node->nodeKey < $key)
-                    $Node = $Node->prevNode;
-            }
-           
-            $node = new ListNodeObj($key);
-            
-            if($Node->nodeNum == 1)
-       	    {
-       	        $prevNode = null;
-       	        $this->head = $node;
-       	    }
-       	    else
-       	    {
-       	        $prevNode = $Node->prevNode;
-       	        $prevNode->nextNode = $node;
-       	    }
-       	        
-       	    // update pointers to previous and next nodes
-       	    $node->nextNode = $Node;
-       	    $node->prevNode = $prevNode;
-       	    $Node->prevNode = $node;
-       	
-            $this->renumNode($node->prevNode);
-            return  $node;
+        
+            return $this->insertNodeAt($n,$key);
         }
         
+      
+      
+      
+        // Inserting a new node in an descending order sorted list nearest
+        // to the key $key. Returns the inserted node.
+        public function insertNodeNearestOfSortedDesc($key) 
+        {
         
+            $Node = $this->head;
+            $n = 1;
         
+            while($Node !== null && $key < $Node->nodeKey)
+            {
+                $Node = $Node->nextNode;
+                $n++;
+                
+            }
+        
+            return $this->insertNodeAt($n,$key);
+        }
+        
+       
+
 
         // Allocating n nodes in one go. Values to be inserted
         // are passed in the array $value
@@ -371,7 +364,6 @@ class LinkedListObj
                
                 $currentNode = $currentNode->nextNode;
         
-
             if($currentNode->nodeKey === $item)
                 return $currentNode;
             else
@@ -475,7 +467,7 @@ class LinkedListObj
         public function renumNode($Node) 
         {
             $currentNode = $Node;
-            $numb = $Node->nodeNum-1;
+            $numb = $Node->nodeNum;
             
             while($currentNode !== null)
             {
@@ -508,7 +500,10 @@ class LinkedListObj
         // Returns the total nodes in the list
         public function deleteNode($n) 
         {  
-        
+            // if list empty returns 0
+            if($this->totNode === 0)
+                return 0;
+                
             $currentNode = $this->head;
             
             while($currentNode !== null && $currentNode->nodeNum < $n)
@@ -529,11 +524,9 @@ class LinkedListObj
               $currentNode->prevNode->nextNode = $currentNode->nextNode;
               $currentNode->nextNode->prevNode = $currentNode->prevNode;
             }
-    
             
             unset($currentNode);
 
-        
             $this->totNode = $this->totNode-1;
             $this->renumList();
             return $this->totNode;
