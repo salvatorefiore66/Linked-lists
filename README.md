@@ -207,7 +207,7 @@ Very straightforward to use and extend.
 Instantiate a new class LinkedListObj passing by argument a key for this new list.  Each list node can handle a child which is fundamentally a pointer to an object the class should manage. Children can also be put in a stack for further manipulation. The class LinkedListObj includes a method for stacking through the class Stack documented in stack.php. Follow various methods examples.
 
   
-    // An example of object passed by argument
+        // An example of object passed by argument
     class mychild
     {
         public $myvalue;
@@ -229,7 +229,7 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
     // A new linked List. Passing the key to the constructor
     $mylist1 = new LinkedListObj("a list key");
    
-   
+    
     for($x = 0; $x< 20; $x++)
              $mylist1->insertNode((string) mt_rand());
   
@@ -409,20 +409,24 @@ Instantiate a new class LinkedListObj passing by argument a key for this new lis
   
   
     
-    
-    // Printing the list values
-    $mylist1->listList();
-    $key = "378912578";
-    
-    $node = $mylist1->findNearestNodeSortedLinear($key,"-");
-    if($node !== null)
-        echo  "<br><br> The nearest node to key " .  $key . " is node number  " . $node->nodeNum . " <br><br> ";
-    
-    
+    // A new linked List. Passing the key to the constructor.
+    // Insertion of nodes causes the sorting of the list in ascending
+    // order.
+    $mylist2 = new LinkedListObj("a second list key");
 
+    $mylist2->insertNodeNearestOfSortedDesc("378912578");
 
-    $node = $mylist1->insertNodeNearestOf($key,"-");
-    if($node !== null)
-        echo  "<br><br> Insert new node with key " .  $key . " nearest to node number  " . $node->nodeNum . " <br><br> ";
-     $mylist1->listList(); 
+    $mylist2->insertNodeNearestOfSortedDesc("378912577");
 
+    $mylist2->insertNodeNearestOfSortedDesc("378912574");
+
+    $mylist2->insertNodeNearestOfSortedDesc("378912579");
+
+    $mylist2->insertNodeNearestOfSortedDesc("378912575");
+
+    $mylist2->insertNodeNearestOfSortedDesc("378912574");
+
+    $mylist2->insertNodeNearestOfSortedDesc("378912580");
+     
+     
+    echo  "<br><br>" . $mylist2->listList(); 
