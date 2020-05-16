@@ -45,8 +45,8 @@
 
 class Stack
 {
-       protected $bottom;                   // stack bottom
-       protected $top;                      // stack top
+       protected $bottom;                   // bottom of the stack
+       protected $top;                      // last inserted node top of the stack
        protected $callbeforenode;           // callback function before pushing / popping
        protected $callafternode;            // callback function after pushing / popping
        protected $totNode;                  // total nodes in the stack
@@ -55,7 +55,7 @@ class Stack
        // Constructor with two arguments.
        // Callback user functions invoked before each node pushing or popping 
        // and soon after.
-       public function __construct($before,$after) 
+       public function __construct($before=null,$after=null) 
        {
             $this->bottom = null;
             $this->top = null;
@@ -138,6 +138,8 @@ class Stack
         }
   
   
+  
+  
         // Printing the whole stack
         public function listStack() 
         {
@@ -152,6 +154,8 @@ class Stack
             
             }
         }
+ 
+ 
  
      
         // Popping a node from the stack. Returns the node popped from the stack.
