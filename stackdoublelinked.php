@@ -7,7 +7,7 @@ include 'stack.php';
 // -------------------------------Class StackDoubleLinked--------------------------------------
 // Salvatore G. Fiore copyright 2020 www.salvatorefiore.com
 // The main purpose: to be used for extending an allocated dynamically stack to a double linked 
-// stack with (x)nodes.
+// stack with (x)nodes. The class is abstracted on a double linked list structure.
 //
 //     T O P
 //      ^|
