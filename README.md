@@ -196,14 +196,30 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
     }
     gc_collect_cycles();
  
-    echo "<br><br>  >  memory usage  <" . memory_get_usage(false) .  ">  bytes  <";
+    echo "<br><br>  >  memory usage  <" . memory_get_usage(false) .  ">  bytes  <";p
     
+     // Callback function called before node insertion
+    function beforen($item)
+    { 
+        return true;
+    } 
+    
+    // Callback function called after node insertion
+    function aftern($item)
+    {
+        return true;
+    }
+  
+   
+# Stack double linked
+Very straightforward to use and extend. Implement a new class StackDoubleLinked passing the key by argument to the constructor. The class StackDoubleLinked extends the class Stack. Follow various methods example as reported below.
+  
     
     // instantiate a double linked stack
     echo "<br><br><br> a new double linked stack ";
     echo "<br><br> >  memory usage  <" . memory_get_usage(false) .  ">  bytes  <";
 
-    // A new stack. Passing callbacks functions to the constructor
+    // A new stack. Passing key to the constructor
     $mydoublestack = new StackDoubleLinked("Double_Linked_Stack");
    
    
@@ -265,17 +281,6 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
  
     echo "<br><br>  >  memory usage  <" . memory_get_usage() .  ">  bytes  <";
     
-    // Callback function called before node insertion
-    function beforen($item)
-    { 
-        return true;
-    } 
-    
-    // Callback function called after node insertion
-    function aftern($item)
-    {
-        return true;
-    }
   
   
   
