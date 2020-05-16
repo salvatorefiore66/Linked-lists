@@ -98,7 +98,7 @@ Instantiate a new class LinkedList passing by argument the callback functions to
 Very straightforward to use and extend. Implement a new class Stack passing by argument the callback functions to be invoked before and after pushing or popping, otherwise null,null.The callbacks will receive the node number to be pushed, a pointer to the node just pushed. If popping the node number to be popped, the popped node. Follow various methods example as reported below.
 
     
-    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  < ";
 
     // A new stack. Passing callbacks functions to the constructor
     $mystack = new Stack("beforen","aftern");
@@ -110,31 +110,32 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
  
  
     // Print the total number of nodes in the stacj
-    echo "  total nodes " .  $mystack->getTop()->nodeNum; 
+    echo "<br><br>   total nodes " .  $mystack->getTop()->nodeNum; 
   
 
     // Print bottom value
-    echo "  bottom value " .  $mystack->getBottom()->stackvalue . "  ";
+    echo "<br><br>   bottom value " .  $mystack->getBottom()->stackvalue . "  ";
    
     
     // Print top value
-    echo "  top value " .  $mystack->getTop()->stackvalue . "  ";
+    echo "<br><br>  top value " .  $mystack->getTop()->stackvalue . "  ";
     
 
-    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+    echo "<br><br> >  memory usage  <" . memory_get_usage() .  ">  bytes  < <br><br>";
  
  
-    echo " printing the whole stack " . $mystack->listStack();
+    echo "<br><br>  printing the whole stack <br><br>" . $mystack->listStack();
+
 
     // Pushing n nodes in one go
-    echo "   4 new nodes to the stack  ";
+    echo "<br><br>   adding 4 new nodes to the list  <br><br> ";
     $arr = array(356,7689,0,1);
     $mystack->multiPush(sizeof($arr),$arr);
 
 
-    echo " printing the whole stack " . $mystack->listStack();
+    echo "<br><br>  printing the whole stack <br><br>" . $mystack->listStack();
 
-    echo " popping three elements " ;
+    echo "<br><br>  popping three elements <br><br> " ;
     
     $poppedelements = array();
     
@@ -142,11 +143,10 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
     $poppedelements[] = $mystack->pop();
     $poppedelements[] = $mystack->pop(); 
 
-    echo " printing the whole stack " . $mystack->listStack();
+    echo "<br><br>  printing the whole stack " . $mystack->listStack();
     
     for($x = 1; $x <= count($poppedelements); $x++ )
-        echo " popped element " . $x . "  " . $poppedelements[$x]->stackvalue; 
-
+        echo "<br><br>  popped element " . $x . "  " . $poppedelements[$x-1]->stackvalue; 
 
     // Getting the stack number of nodes
     $totn = $mystack->getTotStackNode();
@@ -156,16 +156,16 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
     for($x = 0; $x <= $totn; $x++ )
         $poppedelements1[] = $mystack->pop();
     
-    echo " the stack has now  " . $mystack->getTotStackNode() . "  nodes ";
+    echo "<br><br>  the stack has now  " . $mystack->getTotStackNode() . "  nodes <br><br>";
     
-    echo " printing the whole stack " . $mystack->listStack();
+    echo "<br><br>  printing the whole stack <br><br>" . $mystack->listStack();
     
     // Pushing n nodes in one go
-    echo "  8 new nodes to the stack  ";
+    echo "<br><br>   adding 8 new nodes to the list  ";
     $arr = array(1,2,3,4,5,6,7,8);
     $mystack->multiPush(sizeof($arr),$arr);
     
-    echo " iterating the stack ";
+    echo "<br><br>  iterating the stack ";
 
     $startAtNode = 1;
     
@@ -182,10 +182,88 @@ Very straightforward to use and extend. Implement a new class Stack passing by a
         
 
     gc_collect_cycles();
+ 
+    echo "<br><br>  >  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+    
+    // popping all node
+    echo "<br><br>  the stack has now  " . $nodecount = $mystack->getTotStackNode() . "  nodes <br><br>";
+    
+    echo "<br><br>  popping all nodes  from the stack ";
+    for($x = 0; $x < $nodecount; $x++ )
+    {
+        $mystack->pop();
+        echo "<br> node  popped "; 
+    }
+    gc_collect_cycles();
+ 
+    echo "<br><br>  >  memory usage  <" . memory_get_usage(false) .  ">  bytes  <";
+    
+    
+    // instantiate a double linked stack
+    echo "<br><br><br> a new double linked stack ";
+    echo "<br><br> >  memory usage  <" . memory_get_usage(false) .  ">  bytes  <";
+
+    // A new stack. Passing callbacks functions to the constructor
+    $mydoublestack = new StackDoubleLinked("Double_Linked_Stack");
+   
+   
+    // insert 20 nodes containing random values
+    for($x = 0; $x< 200; $x++)
+             $mydoublestack->push(mt_rand());
+ 
+ 
+    // Print the total number of nodes in the stacj
+    echo "<br><br>   total nodes " .  $mydoublestack->getTop()->nodeNum; 
   
 
-    echo ">  memory usage  <" . memory_get_usage() .  ">  bytes  <";
+    // Print bottom value
+    echo "<br><br>   bottom value " .  $mydoublestack->getBottom()->stackvalue . "  ";
+   
     
+    // Print top value
+    echo "<br><br>   top value " .  $mydoublestack->getTop()->stackvalue . "  ";
+    
+    gc_collect_cycles();
+    
+    echo "<br><br> >  memory usage  <" . memory_get_usage(false) .  ">  bytes  <";
+    
+    echo "<br><br> the stack key is : " . $mydoublestack->getStackKey();
+
+    echo "<br><br>  iterating the stack from node 20 to 15 ";
+    // Iterating and traversing the stack from node to node 
+    // and changing the values to 0
+    $mydoublestack->iteratorStackNode(function(&$node)
+        {
+            static $nodenumber = 0;
+            
+            // Anonymous function called at each iteration
+            // Receiving the node currently traversed
+            echo   "<br>" . " node n. " . $node->nodeNum . " contains value " . $node->stackvalue;
+            
+            $node->stackvalue = 0;
+            
+            return ($nodenumber++ < 5) ? true : false;
+            
+        },$mydoublestack->getNode(20),"-");
+        
+        
+        
+    $mydoublestack->iteratorStackNode(function(&$node)
+        {
+            static $nodenumber = 0;
+            
+            // Anonymous function called at each iteration
+            // Receiving the node currently traversed
+            echo   "<br>" . " node n. " . $node->nodeNum . " now contains value " . $node->stackvalue;
+            
+            return ($nodenumber++ < 5) ? true : false;
+            
+        },$mydoublestack->getNode(20),"-");
+        
+
+    gc_collect_cycles();
+ 
+    echo "<br><br>  >  memory usage  <" . memory_get_usage() .  ">  bytes  <";
     
     // Callback function called before node insertion
     function beforen($item)
